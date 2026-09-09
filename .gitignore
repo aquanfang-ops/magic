@@ -1,0 +1,9 @@
+.log/
+*.log
+log_*.txt
+__pycache__/
+*.pyc
+.env
+.env.*
+*.exe
+.DS_Store
