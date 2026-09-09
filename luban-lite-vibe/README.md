@@ -16,9 +16,13 @@
 └── references/
 ```
 
+本 skill 收录在仓库 [aquanfang-ops/magic](https://github.com/aquanfang-ops/magic)。CC Switch 添加 `aquanfang-ops/magic` 后安装 `luban-lite-vibe`。
+
 ```bat
-git clone https://github.com/aquanfang-ops/luban-lite-vibe.git
+git clone https://github.com/aquanfang-ops/magic.git
 ```
+
+克隆后使用其中的 `luban-lite-vibe/` 目录。
 
 新开一轮对话后生效。用户说「编译」「烧录」「进升级」等即可触发；未点名方案时先列板并停等。
 
