@@ -23,6 +23,7 @@ aquanfang-ops/magic
 | 目录 | 说明 |
 |------|------|
 | [luban-lite-vibe](luban-lite-vibe/) | 匠芯创 Luban-Lite：编译 → 串口进升级 → 烧录 → 串口验证 |
+| [gui-guider-simulator](gui-guider-simulator/) | NXP GUI Guider LVGL 模拟器：32 位 MinGW 编译 → 运行 |
 
 ## 许可
 
