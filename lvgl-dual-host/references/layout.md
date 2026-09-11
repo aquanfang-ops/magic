@@ -26,7 +26,7 @@
     ui_port_sim.c    # SDL 蜂鸣 + 键盘 → ui_app_post_*
     custom.mk        # 理想情况只 include $(AIC_UI_DIR)/guider.mk
   lvgl-simulator/
-    assets/          # 若未把 A: 指到 SDK，则与 <demo>/assets 相对路径同名（同步而来）
+    assets/          # 日常迭代主场；与 <demo>/assets 相对路径同名（见 assets-flow.md）
   generated/         # 勿当板端源；勿为「对齐 UI」手改后当主源
   source/            # 设计稿，不是运行时资源
 ```
@@ -48,7 +48,8 @@ GUI Guider 点 Generate 若覆盖 `custom.mk`，只把 `include $(AIC_UI_DIR)/gu
 
 ## 切图
 
-- 改图改 `<demo>/assets/`（或同步脚本的输入），再同步 / 重映射到模拟器。
+日常先在模拟器做效果，再晋升到 `<demo>/assets/`；急单相反，事后拉回。流程见 [assets-flow.md](assets-flow.md)。
+
 - 相对路径必须与 `A("...")` 一致。
 - 不要把 Guider 的 `custom/`、`generated/`、`source/` 打进板端。
-- 给客户看效果：`simulator.exe` + `SDL2.dll` + 整份运行用 `assets/`，不要整棵工程 zip。
+- 给客户看效果：`simulator.exe` + `SDL2.dll` + 当时运行用的 `assets/`，不要整棵工程 zip。

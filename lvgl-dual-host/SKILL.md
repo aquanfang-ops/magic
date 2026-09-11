@@ -5,6 +5,7 @@ description: >-
   GUI Guider SDL simulator and Luban-Lite board (SCons / rodata assets).
   Use when the user mentions 一份源两边编, 双宿主, ui_app.c, ui_port,
   custom.mk, VPATH, Guider 编 SDK 源码, 模拟器与板端同一套 UI, 切图两套目录,
+  先模拟器后上板, 切图晋升, 急单上板,
   or asks to split/port UI so both the simulator and the board run the
   same logic. Do not use for compile-or-flash-only (luban-lite-vibe),
   simulator-build-only (gui-guider-simulator), or generic LVGL widget
@@ -27,7 +28,7 @@ description: >-
 
 - 新系列要做成「模拟器 + 板端各编同一份 `ui_app.c`」
 - 抽 `ui_port`、改 `custom.mk` / `VPATH`、消灭 Guider 里第二份 `ui_app.c`
-- 切图相对路径、`UI_FS_PREFIX`、path 缓冲、Generate 冲掉 mk
+- 切图相对路径、先模拟器后上板 / 急单先板再拉回、`UI_FS_PREFIX`、path 缓冲、Generate 冲掉 mk
 - 用户说「照已落地的那套结构做」，但没让你只编/只烧
 
 **不要用（改走别的 skill，或直接改业务代码）：**
@@ -36,7 +37,7 @@ description: >-
 |--------------|--------|
 | 只编译 / 烧录 / 进升级 | `luban-lite-vibe` |
 | 只编、只跑 Guider 模拟器 | `gui-guider-simulator` |
-| 只改某一页按钮文案、颜色，两边工程已经按本规程接好 | 直接改 SDK 里那份 `ui_app.c` + 规范 assets，不必重读架构 |
+| 只改某一页按钮文案、颜色，两边工程已经按本规程接好 | 直接改 SDK 里那份 `ui_app.c`；切图按 assets-flow（日常先模拟器） |
 | 问 LVGL 控件 API、无关双宿主 | 当普通 LVGL 问题 |
 
 两边都要动时可以**组合**：本 skill 定布局 → 编模拟器走 `gui-guider-simulator` → 板端编/烧走 `luban-lite-vibe`。不要在本 skill 里再抄一遍 MinGW / scons / 烧录步骤。
@@ -46,7 +47,8 @@ description: >-
 | 情况 | 先读 |
 |------|------|
 | 为什么不能整棵 Guider 进板端 | [references/architecture.md](references/architecture.md) |
-| 文件怎么拆、`guider.mk`、assets 单源 | [references/layout.md](references/layout.md) |
+| 文件怎么拆、`guider.mk` | [references/layout.md](references/layout.md) |
+| 新切图：先模拟器或急单上板 | [references/assets-flow.md](references/assets-flow.md) |
 | 落地顺序与检查清单 | [references/checklist.md](references/checklist.md) |
 
 ## 硬停
@@ -65,7 +67,7 @@ description: >-
 - **唯一逻辑源**：SDK git 里 `<demo>/ui_app.c`（及该 demo 下的 port）。Guider **不要**再留 `custom/ui_app.c`。
 - **`ui_app_init(void)`** 用 `lv_screen_active()`，不要依赖 `gui_guider.h`。
 - **路径**：`snprintf` 用 `UI_FS_PREFIX`，缓冲 ≥ 64。禁止写死 `A:` 或短 `path[24]`。
-- **切图规范源**：`<demo>/assets/`。模拟器同步或把 `A:` 指到这份；`source/` 不当运行时资源。相对路径与代码一致。
+- **切图**：日常主场是模拟器 `assets/`，签字后**单向晋升**到 `<demo>/assets/` 再上板；急单先改 `<demo>/assets/`，再开模拟器前**单向拉回**。禁止双向自动对拍。`source/` 不当运行时资源。相对路径与代码一致。详见 [assets-flow.md](references/assets-flow.md)。
 - **Guider Makefile**：`include` SDK 里的 `guider.mk`（或等价碎片），用 `VPATH` + 明确 `GEN_CSRCS`，不要 `wildcard custom/*.c`。`AIC_UI_DIR` / `<SDK>` 运行时解析，不要写死盘符。Generate 冲掉 `custom.mk` 后只恢复 include 那一行。
 - **量产符号**：以该 demo **已经对外链接**的 API 为准，只抽 port、不改语义。参考产品的功能（多出来的模式/食谱）禁止硬抄。
 
