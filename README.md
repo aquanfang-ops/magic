@@ -25,6 +25,7 @@ aquanfang-ops/magic
 | [luban-lite-vibe](luban-lite-vibe/) | 匠芯创 Luban-Lite：编译 → 串口进升级 → 烧录 → 串口验证 |
 | [gui-guider-simulator](gui-guider-simulator/) | NXP GUI Guider LVGL 模拟器：32 位 MinGW 编译 → 运行 |
 | [lvgl-dual-host](lvgl-dual-host/) | LVGL 一份逻辑两边编（Guider SDL + 板端 SCons），不含具体产品表 |
+| [reviewer-director](reviewer-director/) | 高阶模型：审 LVGL 执行模型批次、出下一题（用户中继） |
 
 ## 许可
 
